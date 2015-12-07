@@ -8,7 +8,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Component;
 
 @Component
-class MD5ChecksumCalculator implements UIDGenerator {
+class MD5ChecksumUIDGenerator implements UIDGenerator {
 
 	@Override
 	public String getUID(File file) {		

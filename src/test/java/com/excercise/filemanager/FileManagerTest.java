@@ -1,5 +1,6 @@
 package com.excercise.filemanager;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -11,8 +12,15 @@ import com.excercise.TestFilesClientServerApplication;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(TestFilesClientServerApplication.class)
 public class FileManagerTest {
-	@Autowired
-	FileManager fileManager;
+
+    @Before
+    public void setUp() {
+        //set up name repository mock
+    	//myServiceStub = new MyServiceStub();
+        
+    	//create my file manager
+    	//myLauncher = new MyLauncher(myServiceStub);
+    }
 
 	@Test
 	public void testAdd() {

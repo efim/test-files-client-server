@@ -1,8 +1,10 @@
 package com.excercise.filemanager;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.stereotype.Component;
@@ -11,15 +13,16 @@ import org.springframework.stereotype.Component;
 class MD5ChecksumUIDGenerator implements UIDGenerator {
 
 	@Override
-	public String getUID(File file) {		
+	public String getUID(byte[] fileData) {		
         String checksum = null;
-        try {  
-            checksum = DigestUtils.md5Hex(new FileInputStream(file));
-        } catch (IOException ex) {
+        try {
+        checksum = DigestUtils.md5Hex(new ByteArrayInputStream(fileData));
+        } catch (IOException e) {
         	//do nothing for now
-        	//TODO: insert logging
+        	//TODO: add logging
         }
+
         return checksum;
 	}
-
+	
 }

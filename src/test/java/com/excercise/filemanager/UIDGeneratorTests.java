@@ -34,9 +34,14 @@ public class UIDGeneratorTests {
 		FileUtils.writeStringToFile(file1, fileContent);
 		FileUtils.writeStringToFile(file2, fileContent);
 		
-		//IOUtils.toByteArray(InputStream input).
-		byte[] input1 = IOUtils.toByteArray(new FileInputStream(file1));
-		byte[] input2 = IOUtils.toByteArray(new FileInputStream(file2));
+		
+		byte[] input1 = null;
+		byte[] input2 = null;
+		try (FileInputStream stream1 = new FileInputStream(file1);
+				FileInputStream stream2 = new FileInputStream(file2)) {
+			input1 = IOUtils.toByteArray(stream1);
+			input2 = IOUtils.toByteArray(stream2);
+		}
 		
 		String firstUid = uidGenerator.getUID(input1);
 		String secondUid = uidGenerator.getUID(input2);

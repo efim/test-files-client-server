@@ -20,7 +20,7 @@ public class SimpleFileManager implements FileManager {
 	}
 	
 	@Override
-	public void add(File file) {
+	public void add(String fileName, byte[] fileData) {
 		// TODO Auto-generated method stub
 
 	}

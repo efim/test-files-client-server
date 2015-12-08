@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class SimpleFilesystemConnector implements FilesystemConnector {
 
 	@Override
-	public void write(String filename, byte[] data) {
+	public void write(String fileId, byte[] data) {
 		// TODO Auto-generated method stub
 
 	}
@@ -15,6 +15,12 @@ public class SimpleFilesystemConnector implements FilesystemConnector {
 	public byte[] read(String fileId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void delete(String fileId) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

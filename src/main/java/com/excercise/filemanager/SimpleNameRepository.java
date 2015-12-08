@@ -14,6 +14,10 @@ class SimpleNameRepository implements NameRepository {
 	public SimpleNameRepository() {
 		nameToIdMap = new HashMap<String, String>();
 	}
+	
+	public SimpleNameRepository(Map<String, String> nameToIdMap) {
+		this.nameToIdMap = nameToIdMap;
+	}
 
 	@Override
 	public Set<String> getNamesById(String fileId) {

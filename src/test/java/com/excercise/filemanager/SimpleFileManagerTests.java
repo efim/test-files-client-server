@@ -11,7 +11,7 @@ import com.excercise.TestFilesClientServerApplication;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(TestFilesClientServerApplication.class)
-public class FileManagerTests {
+public class SimpleFileManagerTests {
 
     @Before
     public void setUp() {

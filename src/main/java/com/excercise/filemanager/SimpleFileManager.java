@@ -12,11 +12,13 @@ public class SimpleFileManager implements FileManager {
 
 	private NameRepository nameRepository;
 	private UIDGenerator uidGenerator;
+	private FilesystemConnector filesystemConnector;
 	
 	@Autowired(required=true)
-	public SimpleFileManager(NameRepository repository, UIDGenerator uidGenerator) {
+	public SimpleFileManager(NameRepository repository, UIDGenerator uidGenerator, FilesystemConnector connector) {
 		this.nameRepository = repository;
 		this.uidGenerator = uidGenerator;
+		this.filesystemConnector = connector;
 	}
 	
 	@Override
@@ -42,9 +44,4 @@ public class SimpleFileManager implements FileManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	private void write(File file) {
-		
-	}
-
 }

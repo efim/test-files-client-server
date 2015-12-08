@@ -88,5 +88,6 @@ public class SimpleFileManagerTests {
 		
 		fileManager.find("file1");
 		
-		Mockito.verify(mockNameRepository).find("file1");	};
+		Mockito.verify(mockNameRepository).find("file1");
+	};
 }

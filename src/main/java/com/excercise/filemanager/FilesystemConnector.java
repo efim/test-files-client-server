@@ -1,6 +1,6 @@
 package com.excercise.filemanager;
 
-public interface FilesystemConnector {
+interface FilesystemConnector {
 	
 	public void write(String fileId, byte[] data);
 	

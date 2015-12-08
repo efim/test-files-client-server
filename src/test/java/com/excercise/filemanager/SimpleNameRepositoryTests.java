@@ -4,16 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.mockito.Mockito;
-
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -111,6 +110,21 @@ public class SimpleNameRepositoryTests {
     	
     	assertFalse(nameRepository.containsId("1"));
     	assertTrue(nameRepository.containsId("2"));
+	};
+	
+	@Test
+	public void testFind() {
+		Set<Map.Entry<String, String>> expectedSearchResult = new HashSet<Map.Entry<String, String>>();
+		expectedSearchResult.add(new AbstractMap.SimpleEntry<String, String>("file1.txt", "1"));
+		expectedSearchResult.add(new AbstractMap.SimpleEntry<String, String>("file1-picture.pdf", "4432"));
+		
+    	nameToIdMap = new HashMap<String, String>();
+    	nameToIdMap.put("file1.txt", "1");
+    	nameToIdMap.put("file1-pictures.txt", "2");
+    	
+    	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap);	
+	
+    	assertEquals(expectedSearchResult, nameRepository.find("file1"));
 	};
 	
 }

@@ -2,6 +2,7 @@ package com.excercise.filemanager;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.springframework.stereotype.Component;
@@ -53,6 +54,12 @@ class SimpleNameRepository implements NameRepository {
 	public void remove(String fileId) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Set<Entry<String, String>> find(String namePart) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

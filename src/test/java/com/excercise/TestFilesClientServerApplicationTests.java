@@ -16,6 +16,7 @@ public class TestFilesClientServerApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		throw new RuntimeException("Example test is not implemented");
 	}
 
 }

@@ -8,8 +8,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import javax.validation.constraints.AssertTrue;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -28,7 +26,7 @@ public class SimpleFileManagerTests {
 		FilesystemConnector mockFilesystemConnector = Mockito.mock(FilesystemConnector.class);
 		UIDGenerator uidGenerator = new MD5ChecksumUIDGenerator();
 
-		byte[] data = javax.xml.bind.DatatypeConverter.parseHexBinary("hello world!");
+		byte[] data = javax.xml.bind.DatatypeConverter.parseHexBinary("000100100100");
 
 		String expectedFileId = uidGenerator.getUID(data);		
 		
@@ -45,7 +43,7 @@ public class SimpleFileManagerTests {
 		FilesystemConnector mockFilesystemConnector = Mockito.mock(FilesystemConnector.class);
 		UIDGenerator uidGenerator = new MD5ChecksumUIDGenerator();
 
-		byte[] data = javax.xml.bind.DatatypeConverter.parseHexBinary("hello world!");
+		byte[] data = javax.xml.bind.DatatypeConverter.parseHexBinary("000100100100");
 
 		String expectedFileId = uidGenerator.getUID(data);		
 		
@@ -79,7 +77,7 @@ public class SimpleFileManagerTests {
 		NameRepository mockNameRepository = Mockito.mock(NameRepository.class);
 		FilesystemConnector mockFilesystemConnector = Mockito.mock(FilesystemConnector.class);
 		UIDGenerator uidGenerator = new MD5ChecksumUIDGenerator();
-		byte[] expectedData = javax.xml.bind.DatatypeConverter.parseHexBinary("hello world!");
+		byte[] expectedData = javax.xml.bind.DatatypeConverter.parseHexBinary("000100100100");
 		
 		Mockito.when(mockFilesystemConnector.read("1")).thenReturn(expectedData);		
 		

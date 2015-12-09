@@ -1,6 +1,5 @@
 package com.excercise.filemanager;
 
-import java.io.File;
 import java.util.Map;
 import java.util.Set;
 
@@ -34,7 +33,7 @@ public class SimpleFileManager implements FileManager {
 	}
 
 	@Override
-	public File retrieve(String fileId) {
+	public byte[] retrieve(String fileId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

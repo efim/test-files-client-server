@@ -1,6 +1,14 @@
 package com.excercise.filemanager;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.AbstractMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
+
+import javax.validation.constraints.AssertTrue;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +28,7 @@ public class SimpleFileManagerTests {
 		FilesystemConnector mockFilesystemConnector = Mockito.mock(FilesystemConnector.class);
 		UIDGenerator uidGenerator = new MD5ChecksumUIDGenerator();
 
-		byte[] data = javax.xml.bind.DatatypeConverter.parseHexBinary("hello world");
+		byte[] data = javax.xml.bind.DatatypeConverter.parseHexBinary("hello world!");
 
 		String expectedFileId = uidGenerator.getUID(data);		
 		
@@ -37,7 +45,7 @@ public class SimpleFileManagerTests {
 		FilesystemConnector mockFilesystemConnector = Mockito.mock(FilesystemConnector.class);
 		UIDGenerator uidGenerator = new MD5ChecksumUIDGenerator();
 
-		byte[] data = javax.xml.bind.DatatypeConverter.parseHexBinary("hello world");
+		byte[] data = javax.xml.bind.DatatypeConverter.parseHexBinary("hello world!");
 
 		String expectedFileId = uidGenerator.getUID(data);		
 		
@@ -71,7 +79,7 @@ public class SimpleFileManagerTests {
 		NameRepository mockNameRepository = Mockito.mock(NameRepository.class);
 		FilesystemConnector mockFilesystemConnector = Mockito.mock(FilesystemConnector.class);
 		UIDGenerator uidGenerator = new MD5ChecksumUIDGenerator();
-		byte[] expectedData = javax.xml.bind.DatatypeConverter.parseHexBinary("hello world");
+		byte[] expectedData = javax.xml.bind.DatatypeConverter.parseHexBinary("hello world!");
 		
 		Mockito.when(mockFilesystemConnector.read("1")).thenReturn(expectedData);		
 		
@@ -84,10 +92,24 @@ public class SimpleFileManagerTests {
 	public void testFind() {
 		NameRepository mockNameRepository = Mockito.mock(NameRepository.class);
 
+		Set<Map.Entry<String, String>> expectedSearchResult = new HashSet<Map.Entry<String, String>>();
+		for (int i = 1; i < 30; i++) {
+			String index = Integer.toString(i);
+			expectedSearchResult.add(new AbstractMap.SimpleEntry<String, String>("file" + index, index));
+		}
+		
+		assertTrue(expectedSearchResult.size() > 25);
+		
+		Mockito.when(mockNameRepository.find("file1")).thenReturn(expectedSearchResult);
+		
 		SimpleFileManager fileManager = new SimpleFileManager(mockNameRepository, null, null);
 		
-		fileManager.find("file1");
+		Set<Map.Entry<String, String>> result = fileManager.find("file1");
 		
 		Mockito.verify(mockNameRepository).find("file1");
+
+		assertTrue(result.size() <= 25);
 	};
+	
+	
 }

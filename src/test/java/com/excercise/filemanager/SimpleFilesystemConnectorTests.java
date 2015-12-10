@@ -1,10 +1,8 @@
 package com.excercise.filemanager;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashMap;
+import java.util.Arrays;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +26,7 @@ public class SimpleFilesystemConnectorTests {
 		
 		byte[] readData = connector.read(testFileId);
 		
-		assertEquals(testData, readData);
+		assertTrue(Arrays.equals(testData, readData));
 		
 		connector.delete(testFileId);
 	};

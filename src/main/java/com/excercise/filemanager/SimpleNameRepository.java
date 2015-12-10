@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -22,44 +24,44 @@ class SimpleNameRepository implements NameRepository {
 
 	@Override
 	public Set<String> getNamesById(String fileId) {
-		// TODO Auto-generated method stub
-		return null;
+		return nameToIdMap.keySet().stream()
+				.filter(key -> nameToIdMap.get(key).equals(fileId))
+				.collect(Collectors.toSet());
 	}
 
 	@Override
 	public String getIdByName(String fileName) {
-		// TODO Auto-generated method stub
-		return null;
+		return nameToIdMap.get(fileName);
 	}
 
 	@Override
 	public boolean containsName(String fileName) {
-		// TODO Auto-generated method stub
-		return false;
+		return nameToIdMap.containsKey(fileName);
 	}
 
 	@Override
 	public boolean containsId(String fileId) {
-		// TODO Auto-generated method stub
-		return false;
+		return nameToIdMap.containsValue(fileId);
 	}
 
 	@Override
 	public void add(String fileName, String fileId) {
-		// TODO Auto-generated method stub
-		
+		nameToIdMap.put(fileName, fileId);
 	}
 
 	@Override
 	public void remove(String fileId) {
-		// TODO Auto-generated method stub
-		
+		while (nameToIdMap.values().remove(fileId));
 	}
 
 	@Override
 	public Set<Entry<String, String>> find(String namePart) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		Predicate<Map.Entry<String,String>> searchPredicate = e -> e.getKey().contains(namePart);
+		
+		return nameToIdMap.entrySet().stream()
+				.filter(searchPredicate)
+				.collect(Collectors.toSet());
 	}
 
 }

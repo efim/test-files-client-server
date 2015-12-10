@@ -107,9 +107,9 @@ public class SimpleNameRepositoryTests {
     	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap);	
 	
     	nameRepository.remove("1");
-    	
-    	assertFalse(nameRepository.containsId("1"));
-    	assertTrue(nameRepository.containsId("2"));
+    	    	
+    	assertFalse(nameToIdMap.containsKey("file1.txt"));
+    	assertTrue(nameToIdMap.containsKey("file2.txt"));
 	};
 	
 	@Test
@@ -120,11 +120,14 @@ public class SimpleNameRepositoryTests {
 		
     	nameToIdMap = new HashMap<String, String>();
     	nameToIdMap.put("file1.txt", "1");
-    	nameToIdMap.put("file1-pictures.txt", "2");
+    	nameToIdMap.put("file1-picture.pdf", "4432");
+    	nameToIdMap.put("otherFile", "3345");
     	
     	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap);	
+    	
+    	Set<Map.Entry<String, String>> result = nameRepository.find("file1");
 	
-    	assertEquals(expectedSearchResult, nameRepository.find("file1"));
+    	assertEquals(expectedSearchResult, result);
 	};
 	
 }

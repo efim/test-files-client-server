@@ -49,9 +49,13 @@ public class SimpleFileManagerTests {
 		
 		SimpleFileManager fileManager = new SimpleFileManager(mockNameRepository, uidGenerator, mockFilesystemConnector);
 		fileManager.add("file1.txt", data);
+		
+		Mockito.when(mockNameRepository.containsId(expectedFileId)).thenReturn(true);
+		
 		fileManager.add("file2-duplicate.txt", data);
 		fileManager.add("another duplicate.txt", data);
 		
+		Mockito.verify(mockNameRepository).add("file1.txt", expectedFileId);
 		Mockito.verify(mockNameRepository).add("file2-duplicate.txt", expectedFileId);
 		Mockito.verify(mockNameRepository).add("another duplicate.txt", expectedFileId);
 		Mockito.verify(mockFilesystemConnector, Mockito.atMost(1)).write(expectedFileId, data);
@@ -79,11 +83,14 @@ public class SimpleFileManagerTests {
 		UIDGenerator uidGenerator = new MD5ChecksumUIDGenerator();
 		byte[] expectedData = javax.xml.bind.DatatypeConverter.parseHexBinary("000100100100");
 		
+		Mockito.when(mockNameRepository.containsId("1")).thenReturn(true);
 		Mockito.when(mockFilesystemConnector.read("1")).thenReturn(expectedData);		
 		
 		SimpleFileManager fileManager = new SimpleFileManager(mockNameRepository, uidGenerator, mockFilesystemConnector);
 		
-		assertEquals(expectedData, fileManager.retrieve("1"));
+		byte[] result = fileManager.retrieve("1");
+		
+		assertEquals(expectedData, result);
 	};
 	
 	@Test

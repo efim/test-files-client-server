@@ -2,6 +2,7 @@ package com.excercise.filemanager;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,6 +10,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class SimpleFileManager implements FileManager {
 
+	private static int maxSearchLenght = 25;
+	
 	private NameRepository nameRepository;
 	private UIDGenerator uidGenerator;
 	private FilesystemConnector filesystemConnector;
@@ -22,25 +25,37 @@ public class SimpleFileManager implements FileManager {
 	
 	@Override
 	public void add(String fileName, byte[] fileData) {
-		// TODO Auto-generated method stub
-
+		
+		String fileId = uidGenerator.getUID(fileData);
+		if (nameRepository.containsId(fileId) && nameRepository.containsName(fileName)) {
+			return;
+		} else if (nameRepository.containsId(fileId)) {
+			nameRepository.add(fileName, fileId);			
+		} else {
+			nameRepository.add(fileName, fileId);
+			filesystemConnector.write(fileId, fileData);
+		}
+		
 	}
 
 	@Override
 	public void remove(String fileId) {
-		// TODO Auto-generated method stub
-
+		nameRepository.remove(fileId);
+		filesystemConnector.delete(fileId);
 	}
 
 	@Override
 	public byte[] retrieve(String fileId) {
-		// TODO Auto-generated method stub
+		if (nameRepository.containsId(fileId)) {
+			return filesystemConnector.read(fileId);
+		}
 		return null;
 	}
 
 	@Override
 	public Set<Map.Entry<String, String>> find(String namePart) {
-		// TODO Auto-generated method stub
-		return null;
+		Set<Map.Entry<String, String>> result = nameRepository.find(namePart);
+		
+		return result.stream().limit(maxSearchLenght).collect(Collectors.toSet());
 	}
 }

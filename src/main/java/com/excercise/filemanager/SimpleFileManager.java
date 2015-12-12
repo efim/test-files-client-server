@@ -39,9 +39,14 @@ public class SimpleFileManager implements FileManager {
 	}
 
 	@Override
-	public void remove(String fileId) {
+	public boolean remove(String fileId) {
+		if (!nameRepository.containsId(fileId)) {
+			return false;
+		}
+		
 		nameRepository.remove(fileId);
 		filesystemConnector.delete(fileId);
+		return true;
 	}
 
 	@Override

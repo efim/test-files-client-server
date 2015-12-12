@@ -1,6 +1,7 @@
 package com.excercise.filemanager;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.AbstractMap;
@@ -68,11 +69,18 @@ public class SimpleFileManagerTests {
 		FilesystemConnector mockFilesystemConnector = Mockito.mock(FilesystemConnector.class);
 		UIDGenerator uidGenerator = new MD5ChecksumUIDGenerator();
 		
+		Mockito.when(mockNameRepository.containsId("1")).thenReturn(true);
+		Mockito.when(mockNameRepository.containsId("2")).thenReturn(false);
+		
 		SimpleFileManager fileManager = new SimpleFileManager(mockNameRepository, uidGenerator, mockFilesystemConnector);
 
-		fileManager.remove("1");
+		boolean result = fileManager.remove("1");
+		assertTrue(result);
 		Mockito.verify(mockNameRepository).remove("1");
 		Mockito.verify(mockFilesystemConnector).delete("1");
+		
+		result = fileManager.remove("2");
+		assertFalse(result);
 	
 	};
 	

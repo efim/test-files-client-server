@@ -4,31 +4,25 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.excercise.TestFilesClientServerApplication;
 import com.excercise.filemanager.FileManager;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(TestFilesClientServerApplication.class)
 public class FileDeletionControllerTests {
 	
-	private MockMvc mockMvc;
-	
-	@Autowired
-	FileManager fileManagerMock;
 	
 	@Test
 	public void testDeleteFileById() throws Exception {
 		String testFileId = "1";
+		FileManager fileManagerMock = Mockito.mock(FileManager.class);
 		Mockito.stub(fileManagerMock.remove("1")).toReturn(true);
+		
+		FileDeletionController controller = new FileDeletionController(fileManagerMock);
+		MockMvc mockMvc = standaloneSetup(controller).build();
 		
 		mockMvc.perform(post("/delete").param("fileId", testFileId))
 			.andExpect(model().attribute("deletionSussesfull", is(true)))
@@ -41,8 +35,11 @@ public class FileDeletionControllerTests {
 	@Test
 	public void testDeleteFileByBadId() throws Exception {
 		String testFileId = "1";
+		FileManager fileManagerMock = Mockito.mock(FileManager.class);
 		Mockito.stub(fileManagerMock.remove("1")).toReturn(false);
-
+		
+		FileDeletionController controller = new FileDeletionController(fileManagerMock);
+		MockMvc mockMvc = standaloneSetup(controller).build();
 		
 		mockMvc.perform(post("/delete").param("fileId", testFileId))
 			.andExpect(model().attribute("deletionSussesfull", is(false)))

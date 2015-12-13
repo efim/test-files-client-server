@@ -1,7 +1,6 @@
 package com.excercise.web;
 
 import static org.hamcrest.Matchers.is;
-
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
@@ -33,9 +32,24 @@ public class FileDispatchControllerTests {
 			.andExpect(content().bytes(data));
 		
 		Mockito.verify(fileManagerMock).retrieve(testFileId);
-		Mockito.verifyNoMoreInteractions(fileManagerMock);
 	}
-
 	
+	@Test
+	public void testAcquireFileNonexistent() throws Exception {
+		String testFileId = "1";
+
+		FileManager fileManagerMock = Mockito.mock(FileManager.class);
+		Mockito.stub(fileManagerMock.retrieve(testFileId)).toReturn(null);
+		
+		FileDispatchController controller = new FileDispatchController(fileManagerMock);
+		MockMvc mockMvc = standaloneSetup(controller).build();
+		
+		mockMvc.perform(get("/download").param("fileId", testFileId))
+			.andExpect(view().name("homepage"))
+			.andExpect(model().attribute("error", "FileNotFound"))
+			.andExpect(model().attribute("downloadSuccess", is(false)));
+		
+		Mockito.verify(fileManagerMock).retrieve(testFileId);
+	}
 
 }

@@ -114,9 +114,9 @@ public class SimpleNameRepositoryTests {
 	
 	@Test
 	public void testFind() {
-		Set<Map.Entry<String, String>> expectedSearchResult = new HashSet<Map.Entry<String, String>>();
-		expectedSearchResult.add(new AbstractMap.SimpleEntry<String, String>("file1.txt", "1"));
-		expectedSearchResult.add(new AbstractMap.SimpleEntry<String, String>("file1-picture.pdf", "4432"));
+		Map<String, String> expectedSearchResult = new HashMap<String, String>();
+		expectedSearchResult.put("file1.txt", "1");
+		expectedSearchResult.put("file1-picture.pdf", "4432");
 		
     	nameToIdMap = new HashMap<String, String>();
     	nameToIdMap.put("file1.txt", "1");
@@ -125,7 +125,7 @@ public class SimpleNameRepositoryTests {
     	
     	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap);	
     	
-    	Set<Map.Entry<String, String>> result = nameRepository.find("file1");
+    	Map<String, String> result = nameRepository.find("file1");
 	
     	assertEquals(expectedSearchResult, result);
 	};

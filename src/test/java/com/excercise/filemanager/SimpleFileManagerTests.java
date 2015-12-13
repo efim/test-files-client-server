@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.AbstractMap;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -105,10 +106,10 @@ public class SimpleFileManagerTests {
 	public void testFind() {
 		NameRepository mockNameRepository = Mockito.mock(NameRepository.class);
 
-		Set<Map.Entry<String, String>> expectedSearchResult = new HashSet<Map.Entry<String, String>>();
+		Map<String, String> expectedSearchResult = new HashMap<String, String>();
 		for (int i = 1; i < 30; i++) {
 			String index = Integer.toString(i);
-			expectedSearchResult.add(new AbstractMap.SimpleEntry<String, String>("file" + index, index));
+			expectedSearchResult.put("file" + index, index);
 		}
 		
 		assertTrue(expectedSearchResult.size() > 25);

@@ -2,12 +2,12 @@ package com.excercise.filemanager;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
+
+import com.google.common.collect.Maps;
 
 @Component
 class SimpleNameRepository implements NameRepository {
@@ -55,13 +55,9 @@ class SimpleNameRepository implements NameRepository {
 	}
 
 	@Override
-	public Set<Entry<String, String>> find(String namePart) {
-		
-		Predicate<Map.Entry<String,String>> searchPredicate = e -> e.getKey().contains(namePart);
-		
-		return nameToIdMap.entrySet().stream()
-				.filter(searchPredicate)
-				.collect(Collectors.toSet());
+	public Map<String, String> find(String namePart) {		
+		Map<String, String> result = Maps.filterKeys(nameToIdMap, e -> e.contains(namePart)); 
+		return result;
 	}
 
 }

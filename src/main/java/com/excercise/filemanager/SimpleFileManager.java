@@ -1,7 +1,6 @@
 package com.excercise.filemanager;
 
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +57,11 @@ public class SimpleFileManager implements FileManager {
 	}
 
 	@Override
-	public Set<Map.Entry<String, String>> find(String namePart) {
-		Set<Map.Entry<String, String>> result = nameRepository.find(namePart);
+	public Map<String, String> find(String namePart) {
+		Map<String, String> result = nameRepository.find(namePart);
 		
-		return result.stream().limit(maxSearchLenght).collect(Collectors.toSet());
+		result.keySet().retainAll(result.keySet().stream().limit(maxSearchLenght).collect(Collectors.toSet()));
+		
+		return result;
 	}
 }

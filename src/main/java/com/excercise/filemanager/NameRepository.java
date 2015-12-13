@@ -10,5 +10,5 @@ interface NameRepository {
 	public boolean containsId(String fileId);
 	public void add(String fileName, String fileId);
 	public void remove(String fileId);
-	public Set<Map.Entry<String, String>> find(String namePart);
+	public Map<String, String> find(String namePart);
 }

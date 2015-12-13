@@ -29,8 +29,6 @@ public class FileSearchController {
 		model.addAttribute("resultList", searchResult);
 		
 		return "searchResults";
-		
-		
 	}
 	
 }

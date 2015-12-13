@@ -1,45 +1,36 @@
 package com.excercise.web;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import com.excercise.TestFilesClientServerApplication;
 import com.excercise.filemanager.FileManager;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(TestFilesClientServerApplication.class)
 public class FileAcquisitionControllerTests {
 	
-	private MockMvc mockMvc;
-	
-	@Autowired
-	FileManager fileManagerMock;
-	
 	@Test
-	public void testDeleteFileById() throws Exception {
-		String testFileId = "1";
-		//i don't need to stub it, just need to verify calls
-		//Create MultipartFile to pass as a parameter!!!
+	public void testUploadFile() throws Exception {
+		FileManager fileManagerMock = Mockito.mock(FileManager.class);
+
 		byte[] content = "Hello World!".getBytes();
 		String fileName = "filename.txt";
 		
-		MultipartFile uploadedFile = new MockMultipartFile(fileName, content);
+		MockMultipartFile uploadedFile = new MockMultipartFile("file", fileName, "multipart/form-data", content);
+	
+		FileAcquisitionController controller = new FileAcquisitionController(fileManagerMock);
+		MockMvc mockMvc = standaloneSetup(controller).build();
 		
-		
-		mockMvc.perform(post("/upload").param("fileId", testFileId))
-			.andExpect(model().attribute("uploadedFile", uploadedFile))
-			.andExpect(view().name("homepage"));
+		mockMvc.perform(MockMvcRequestBuilders.fileUpload("/upload")
+				.file(uploadedFile))
+				.andExpect(model().attribute("uploadSuccessfull", is(true)))
+				.andExpect(view().name("homepage"));
 		
 		Mockito.verify(fileManagerMock).add(fileName, content);
 		Mockito.verifyNoMoreInteractions(fileManagerMock);

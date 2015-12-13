@@ -1,6 +1,8 @@
 package com.excercise.filemanager;
 
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +65,16 @@ public class SimpleFileManager implements FileManager {
 		result.keySet().retainAll(result.keySet().stream().limit(maxSearchLenght).collect(Collectors.toSet()));
 		
 		return result;
+	}
+
+	@Override
+	public String getNameById(String fileId) {
+		
+		Optional<String> someName = nameRepository.getNamesById(fileId).stream().findAny();
+		if (!someName.isPresent()) {
+			return null;
+		} else {
+			return someName.get();
+		}		
 	}
 }

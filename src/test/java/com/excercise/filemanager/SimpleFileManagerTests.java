@@ -141,7 +141,7 @@ public class SimpleFileManagerTests {
 		
 		assertTrue(containedFiles.contains(fileManager.getNameById("1")));
 		
-		assertNull(containedFiles.contains("2"));
+		assertNull(fileManager.getNameById("2"));
 		
 		
 		

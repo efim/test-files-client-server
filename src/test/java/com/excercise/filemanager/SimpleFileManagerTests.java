@@ -4,11 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.AbstractMap;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -118,7 +115,7 @@ public class SimpleFileManagerTests {
 		
 		SimpleFileManager fileManager = new SimpleFileManager(mockNameRepository, null, null);
 		
-		Set<Map.Entry<String, String>> result = fileManager.find("file1");
+		Map<String, String> result = fileManager.find("file1");
 		
 		Mockito.verify(mockNameRepository).find("file1");
 

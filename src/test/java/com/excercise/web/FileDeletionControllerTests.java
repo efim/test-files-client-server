@@ -28,10 +28,24 @@ public class FileDeletionControllerTests {
 	@Test
 	public void testDeleteFileById() throws Exception {
 		String testFileId = "1";
-		//how do I set up mock fileManager???
+		Mockito.stub(fileManagerMock.remove("1")).toReturn(true);
 		
 		mockMvc.perform(post("/delete").param("fileId", testFileId))
 			.andExpect(model().attribute("deletionSussesfull", is(true)))
+			.andExpect(view().name("homepage"));
+		
+		Mockito.verify(fileManagerMock).remove(testFileId);
+		Mockito.verifyNoMoreInteractions(fileManagerMock);
+	}
+	
+	@Test
+	public void testDeleteFileByBadId() throws Exception {
+		String testFileId = "1";
+		Mockito.stub(fileManagerMock.remove("1")).toReturn(false);
+
+		
+		mockMvc.perform(post("/delete").param("fileId", testFileId))
+			.andExpect(model().attribute("deletionSussesfull", is(false)))
 			.andExpect(view().name("homepage"));
 		
 		Mockito.verify(fileManagerMock).remove(testFileId);

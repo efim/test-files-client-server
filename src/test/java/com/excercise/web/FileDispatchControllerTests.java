@@ -29,7 +29,7 @@ public class FileDispatchControllerTests {
 		
 		mockMvc.perform(get("/download").param("fileId", testFileId))
 			.andExpect(view().name("homepage"))
-			.andExpect(model().attribute("fileFound", is(true)))
+			.andExpect(model().attribute("downloadSuccess", is(true)))
 			.andExpect(content().bytes(data));
 		
 		Mockito.verify(fileManagerMock).retrieve(testFileId);

@@ -2,10 +2,13 @@ package com.excercise.filemanager;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -121,6 +124,28 @@ public class SimpleFileManagerTests {
 
 		assertTrue(result.size() <= 25);
 	};
+	
+	@Test
+	public void testGetNameById() {
+		NameRepository mockNameRepository = Mockito.mock(NameRepository.class);
+		
+		Set<String> containedFiles = new HashSet<String>();
+		containedFiles.add("file1.txt");
+		containedFiles.add("file1.txt");
+		containedFiles.add("file1.txt");
+		
+		Mockito.stub(mockNameRepository.getNamesById("1")).toReturn(containedFiles);
+		Mockito.stub(mockNameRepository.getNamesById("2")).toReturn(new HashSet<String>());
+		
+		SimpleFileManager fileManager = new SimpleFileManager(mockNameRepository, null, null);
+		
+		assertTrue(containedFiles.contains(fileManager.getNameById("1")));
+		
+		assertNull(containedFiles.contains("2"));
+		
+		
+		
+	}
 	
 	
 }

@@ -27,7 +27,7 @@ public class FileDispatchControllerTests {
 		MockMvc mockMvc = standaloneSetup(controller).build();
 		
 		mockMvc.perform(get("/download").param("fileId", testFileId))
-			.andExpect(view().name("homepage"))
+			.andExpect(view().name("downloadResults"))
 			.andExpect(model().attribute("downloadSuccess", is(true)))
 			.andExpect(content().bytes(data));
 		
@@ -45,7 +45,7 @@ public class FileDispatchControllerTests {
 		MockMvc mockMvc = standaloneSetup(controller).build();
 		
 		mockMvc.perform(get("/download").param("fileId", testFileId))
-			.andExpect(view().name("homepage"))
+			.andExpect(view().name("downloadResults"))
 			.andExpect(model().attribute("error", "FileNotFound"))
 			.andExpect(model().attribute("downloadSuccess", is(false)));
 		

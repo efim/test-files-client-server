@@ -30,7 +30,7 @@ public class FileAcquisitionControllerTests {
 		mockMvc.perform(MockMvcRequestBuilders.fileUpload("/upload")
 				.file(uploadedFile))
 				.andExpect(model().attribute("uploadSuccessfull", is(true)))
-				.andExpect(view().name("homepage"));
+				.andExpect(view().name("uploadResults"));
 		
 		Mockito.verify(fileManagerMock).add(fileName, content);
 		Mockito.verifyNoMoreInteractions(fileManagerMock);

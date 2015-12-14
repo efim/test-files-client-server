@@ -4,6 +4,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.annotation.PreDestroy;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +23,8 @@ public class SimpleFileManager implements FileManager {
 		this.nameRepository = repository;
 		this.uidGenerator = uidGenerator;
 		this.filesystemConnector = connector;
+		
+		repository.loadFromDisk();
 	}
 	
 	@Override
@@ -75,5 +79,10 @@ public class SimpleFileManager implements FileManager {
 		} else {
 			return someName.get();
 		}		
+	}
+	
+	@PreDestroy
+	public void cleanUp() throws Exception {
+		nameRepository.saveToDisk();
 	}
 }

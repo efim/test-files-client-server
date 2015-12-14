@@ -4,7 +4,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.lang.reflect.Field;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -136,10 +138,15 @@ public class SimpleNameRepositoryTests {
     	nameRepository.add("file1", "1");
     	nameRepository.add("file2", "3254");
     	nameRepository.add("file3", "5532wedfg3");
+    	nameRepository.add("file4!", "4");
     	
-    	String saveFileName = "mapNamesToIds";
+    	String saveFileName = "testMap";
     	
     	nameRepository.setSaveFileName(saveFileName);
+    	
+    	nameRepository.saveToDisk();
+    	
+    	nameRepository.remove("4");
     	
     	nameRepository.saveToDisk();
     	
@@ -151,12 +158,22 @@ public class SimpleNameRepositoryTests {
     	assertTrue(loadedRepository.containsId("3254"));
     	assertTrue(loadedRepository.containsId("5532wedfg3"));
     	
+    	assertFalse(loadedRepository.containsId("4"));
+    	
     	assertFalse(loadedRepository.containsId("2"));
     	assertFalse(loadedRepository.containsId("54tert"));
     	
     	assertEquals(loadedRepository.getIdByName("file1"), nameRepository.getIdByName("file1"));
     	assertEquals(loadedRepository.getIdByName("file2"), nameRepository.getIdByName("file2"));
     	assertEquals(loadedRepository.getIdByName("file3"), nameRepository.getIdByName("file3"));
+    	
+    	try {
+			Files.delete(FileSystems.getDefault().getPath("", saveFileName));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
 	}
 	
 }

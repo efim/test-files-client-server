@@ -140,7 +140,7 @@ public class SimpleNameRepositoryTests {
     	
     	nameRepository.setSaveFileName(saveFileName);
     	
-    	nameReposotiry.saveToDisk();
+    	nameRepository.saveToDisk();
     	
     	NameRepository loadedRepository = new SimpleNameRepository();
     	loadedRepository.setSaveFileName(saveFileName);

@@ -23,24 +23,25 @@ public class FileAcquisitionController {
 
 	@RequestMapping(method = POST)
 	public String upload(@RequestParam("file") MultipartFile file, Model model) {
+		String resultView = "uploadResults";
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();
 
 				fileManager.add(file.getOriginalFilename(), bytes);
 				model.addAttribute("uploadSuccessfull", true);
-				return "homepage";
+				return resultView;
 			} catch (Exception e) {
 				model.addAttribute("uploadSuccessfull", false);
 				model.addAttribute("errorMessage"
 						, "You failed to upload " + file.getName() + " => " + e.getMessage());
-				return "homepage";
+				return resultView;
 			}
 		} else {
 			model.addAttribute("uploadSuccessfull", false);
 			model.addAttribute("errorMessage"
 					, "You failed to upload " + file.getName() + " because the file was empty.");
-			return "homepage";
+			return resultView;
 		}
 	}
 }

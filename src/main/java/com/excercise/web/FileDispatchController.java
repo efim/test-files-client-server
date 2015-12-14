@@ -29,11 +29,12 @@ public class FileDispatchController {
 	@RequestMapping(method = GET)
 	public String download(@RequestParam("fileId") String fileId, HttpServletResponse response, Model model) {
 		byte[] fileToDownload = fileManager.retrieve(fileId);
+		String resultView = "downloadResults";
 
 		if (fileToDownload == null) {
 			model.addAttribute("downloadSuccess", false);
 			model.addAttribute("error", "FileNotFound");
-			return "homepage";
+			return resultView;
 		}
 
 		String fileName = fileManager.getNameById(fileId);
@@ -55,10 +56,10 @@ public class FileDispatchController {
 		} catch (IOException e) {
 			model.addAttribute("downloadSuccess", false);
 			model.addAttribute("error", "Error while writing  " + fileName + " to output => " + e.getMessage());
-			return "homepage";
+			return resultView;
 		}
 		
 		model.addAttribute("downloadSuccess", true);
-		return "homepage";
+		return resultView;
 	}
 }

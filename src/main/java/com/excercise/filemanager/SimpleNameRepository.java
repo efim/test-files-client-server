@@ -77,8 +77,8 @@ class SimpleNameRepository implements NameRepository {
 	public void saveToDisk() {
 		Properties properties = new Properties();
 		properties.putAll(nameToIdMap);
-		try {
-			properties.store(new FileOutputStream(saveFileName), null);
+		try (FileOutputStream out = new FileOutputStream(saveFileName)){
+			properties.store(out, null);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -90,8 +90,8 @@ class SimpleNameRepository implements NameRepository {
 	@Override
 	public void loadFromDisk() {
 		Properties properties = new Properties();
-		try {
-			properties.load(new FileInputStream(saveFileName));
+		try (FileInputStream in = new FileInputStream(saveFileName)){
+			properties.load(in);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -146,9 +147,16 @@ public class SimpleNameRepositoryTests {
     	loadedRepository.setSaveFileName(saveFileName);
     	loadedRepository.loadFromDisk();
     	
-    	assertEquals(loadedRepository.toString(), nameRepository.toString());
+    	assertTrue(loadedRepository.containsId("1"));
+    	assertTrue(loadedRepository.containsId("3254"));
+    	assertTrue(loadedRepository.containsId("5532wedfg3"));
     	
-		
+    	assertFalse(loadedRepository.containsId("2"));
+    	assertFalse(loadedRepository.containsId("54tert"));
+    	
+    	assertEquals(loadedRepository.getIdByName("file1"), nameRepository.getIdByName("file1"));
+    	assertEquals(loadedRepository.getIdByName("file2"), nameRepository.getIdByName("file2"));
+    	assertEquals(loadedRepository.getIdByName("file3"), nameRepository.getIdByName("file3"));
 	}
 	
 }

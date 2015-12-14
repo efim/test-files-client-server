@@ -31,7 +31,7 @@ public class FileSearchControllerTests {
 		FileSearchController controller = new FileSearchController(fileManagerMock);
 		MockMvc mockMvc = standaloneSetup(controller).build();
 		
-		mockMvc.perform(get("/find").param("fileName", testFileNamePart))
+		mockMvc.perform(get("/search").param("fileName", testFileNamePart))
 			.andExpect(view().name("searchResults"))
 			.andExpect(model().attribute("resultList", expectedMap));
 		

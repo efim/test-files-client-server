@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.excercise.filemanager.FileManager;
 
 @Controller
-@RequestMapping("/find")
+@RequestMapping("/search")
 public class FileSearchController {
 	FileManager fileManager;
 	

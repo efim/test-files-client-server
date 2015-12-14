@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Simple server: homepage.</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Search by name:</h1>
+    <form action="searchResults.html" th:action="@{/search}" method="get" target="_blank">
+    	<p>Id: <input type="text" name="fileId" /></p>
+        <p><input type="submit" value="Search" /> <input type="reset" value="Reset" /></p>
+    </form>
+	<h1>Upload file:</h1>
+    <form action="uploadResults.html" th:action="@{/upload}" enctype="multipart/form-data" method="post" target="_blank">
+    	<p>Id: <input type="file" name="file" /></p>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
+	<h1>Download by Id:</h1>
+    <form action="downloadResults.html" th:action="@{/download}" method="get" target="_blank">
+    	<p>Id: <input type="text" name="fileId" /></p>
+        <p><input type="submit" value="Download" /> <input type="reset" value="Reset" /></p>
+    </form>
+</body>
+</html>

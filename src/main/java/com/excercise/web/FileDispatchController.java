@@ -52,6 +52,8 @@ public class FileDispatchController {
 			outStream.write(fileToDownload);
 
 			outStream.close();
+			
+			response.flushBuffer();
 
 		} catch (IOException e) {
 			model.addAttribute("downloadSuccess", false);

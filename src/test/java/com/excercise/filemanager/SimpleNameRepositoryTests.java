@@ -129,4 +129,26 @@ public class SimpleNameRepositoryTests {
     	assertEquals(expectedSearchResult, result);
 	};
 	
+	@Test
+	public void testSaveAndLoadDisk() {
+    	NameRepository nameRepository = new SimpleNameRepository();	
+    	nameRepository.add("file1", "1");
+    	nameRepository.add("file2", "3254");
+    	nameRepository.add("file3", "5532wedfg3");
+    	
+    	String saveFileName = "mapNamesToIds";
+    	
+    	nameRepository.setSaveFileName(saveFileName);
+    	
+    	nameReposotiry.saveToDisk();
+    	
+    	NameRepository loadedRepository = new SimpleNameRepository();
+    	loadedRepository.setSaveFileName(saveFileName);
+    	loadedRepository.loadFromDisk();
+    	
+    	assertEquals(loadedRepository.toString(), nameRepository.toString());
+    	
+		
+	}
+	
 }

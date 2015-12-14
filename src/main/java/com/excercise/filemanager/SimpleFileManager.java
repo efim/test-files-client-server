@@ -39,6 +39,7 @@ public class SimpleFileManager implements FileManager {
 			nameRepository.add(fileName, fileId);
 			filesystemConnector.write(fileId, fileData);
 		}
+		nameRepository.saveToDisk();
 		
 	}
 
@@ -50,6 +51,7 @@ public class SimpleFileManager implements FileManager {
 		
 		nameRepository.remove(fileId);
 		filesystemConnector.delete(fileId);
+		nameRepository.saveToDisk();
 		return true;
 	}
 

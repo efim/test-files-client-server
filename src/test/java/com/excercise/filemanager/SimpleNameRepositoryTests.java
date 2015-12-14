@@ -38,7 +38,7 @@ public class SimpleNameRepositoryTests {
     	expected.add("file1.txt");
     	expected.add("file1.pdf");
     	
-    	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap);
+    	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap, null);
     	
     	assertTrue(expected.equals(nameRepository.getNamesById("1")));
     	
@@ -55,7 +55,7 @@ public class SimpleNameRepositoryTests {
     	nameToIdMap.put("file1.pdf", "1");
     	nameToIdMap.put("file2.txt", "2");
     	
-    	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap);
+    	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap, null);
     	
     	assertEquals("1", nameRepository.getIdByName("file1.txt"));
     	assertEquals("1", nameRepository.getIdByName("file1.pdf"));
@@ -68,7 +68,7 @@ public class SimpleNameRepositoryTests {
     	nameToIdMap.put("file1.txt", "1");
     	nameToIdMap.put("file2.txt", "2");
     	
-    	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap);		
+    	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap, null);		
 		
     	assertTrue(nameRepository.containsName("file1.txt"));
     	assertTrue(nameRepository.containsName("file2.txt"));
@@ -81,7 +81,7 @@ public class SimpleNameRepositoryTests {
     	nameToIdMap.put("file1.txt", "1");
     	nameToIdMap.put("file2.txt", "2");
     	
-    	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap);	
+    	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap, null);	
 
     	assertTrue(nameRepository.containsId("1"));
     	assertTrue(nameRepository.containsId("2"));
@@ -93,7 +93,7 @@ public class SimpleNameRepositoryTests {
 	public void testAdd() {
 		nameToIdMap = Mockito.mock(Map.class);
 		
-    	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap);	
+    	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap, null);	
     	
     	nameRepository.add("file1.txt", "1");
     	
@@ -106,7 +106,7 @@ public class SimpleNameRepositoryTests {
     	nameToIdMap.put("file1.txt", "1");
     	nameToIdMap.put("file2.txt", "2");
     	
-    	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap);	
+    	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap, null);	
 	
     	nameRepository.remove("1");
     	    	
@@ -125,7 +125,11 @@ public class SimpleNameRepositoryTests {
     	nameToIdMap.put("file1-picture.pdf", "4432");
     	nameToIdMap.put("otherFile", "3345");
     	
-    	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap);	
+    	NameSearchPredicateFactory nameSearchPredicateFactory = Mockito.mock(NameSearchPredicateFactory.class);
+    	Mockito.stub(nameSearchPredicateFactory.getPredicate("file1")).toReturn((String e) -> e.contains("file1"));
+    	
+    	
+    	NameRepository nameRepository = new SimpleNameRepository(nameToIdMap, nameSearchPredicateFactory);	
     	
     	Map<String, String> result = nameRepository.find("file1");
 	
@@ -134,7 +138,7 @@ public class SimpleNameRepositoryTests {
 	
 	@Test
 	public void testSaveAndLoadDisk() {
-    	NameRepository nameRepository = new SimpleNameRepository();	
+    	NameRepository nameRepository = new SimpleNameRepository(null);	
     	nameRepository.add("file1", "1");
     	nameRepository.add("file2", "3254");
     	nameRepository.add("file3", "5532wedfg3");
@@ -150,7 +154,7 @@ public class SimpleNameRepositoryTests {
     	
     	nameRepository.saveToDisk();
     	
-    	NameRepository loadedRepository = new SimpleNameRepository();
+    	NameRepository loadedRepository = new SimpleNameRepository(null);
     	loadedRepository.setSaveFileName(saveFileName);
     	loadedRepository.loadFromDisk();
     	

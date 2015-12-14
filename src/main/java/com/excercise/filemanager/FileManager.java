@@ -1,7 +1,6 @@
 package com.excercise.filemanager;
 
 import java.util.Map;
-import java.util.Set;
 
 public interface FileManager {
 	public void add(String fileName, byte[] fileData);

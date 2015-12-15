@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Simple server: search results for $$$Make this dynamic$$$</title>
+<title th:text="'Simple server: search results for ' + ${fileName}">Simple server: search results for ID</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<h1>Search results</h1>
+	<h1 th:text="'Simple server: search results for ' + ${fileName}">Search results</h1>
 	<table>
 		<thead>
 			<tr>
@@ -15,7 +15,7 @@
 		</thead>
 		<tbody>
 			<tr th:each="fileMap : ${resultList}">
-				<td th:text="${fileMap}">File1.txt</td>
+				<td th:text="${fileMap.key}">File1.txt</td>
 				<td th:text="${fileMap.value}">5t4124ed</td>
 			</tr>
 		</tbody>

@@ -27,6 +27,7 @@ public class FileSearchController {
 		Map<String, String> searchResult = fileManager.find(fileName);
 		
 		model.addAttribute("resultList", searchResult);
+		model.addAttribute("fileName", fileName);
 		
 		return "searchResults";
 	}

@@ -20,6 +20,7 @@ class SimpleNameRepository implements NameRepository {
 	
 	private String saveFileName;
 	private Map<String, String> nameToIdMap;
+	private PredicateFactory<String> nameSearchPredicateFactory;
 	
 	@Autowired
 	@Override
@@ -27,12 +28,17 @@ class SimpleNameRepository implements NameRepository {
 		this.saveFileName = saveFileName;
 	}
 	
-	public SimpleNameRepository() {
-		nameToIdMap = new HashMap<String, String>();
+	@Autowired
+	public SimpleNameRepository(PredicateFactory<String> nameSearchPredicateFactory) {
+		this.nameToIdMap = new HashMap<String, String>();
+		this.nameSearchPredicateFactory = nameSearchPredicateFactory;
+
+		
 	}
 	
-	public SimpleNameRepository(Map<String, String> nameToIdMap) {
+	public SimpleNameRepository(Map<String, String> nameToIdMap, PredicateFactory<String> nameSearchPredicateFactory) {
 		this.nameToIdMap = nameToIdMap;
+		this.nameSearchPredicateFactory = nameSearchPredicateFactory;
 	}
 
 	@Override
@@ -69,7 +75,7 @@ class SimpleNameRepository implements NameRepository {
 
 	@Override
 	public Map<String, String> find(String namePart) {		
-		Map<String, String> result = Maps.filterKeys(nameToIdMap, e -> e.contains(namePart)); 
+		Map<String, String> result = Maps.filterKeys(nameToIdMap, nameSearchPredicateFactory.getPredicate(namePart)); 
 		return result;
 	}
 

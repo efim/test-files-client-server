@@ -26,7 +26,7 @@ public class FileDeletionControllerTests {
 		
 		mockMvc.perform(post("/delete").param("fileId", testFileId))
 			.andExpect(model().attribute("deletionSussesfull", is(true)))
-			.andExpect(view().name("homepage"));
+			.andExpect(view().name("redirect:/"));
 		
 		Mockito.verify(fileManagerMock).remove(testFileId);
 		Mockito.verifyNoMoreInteractions(fileManagerMock);
@@ -43,7 +43,7 @@ public class FileDeletionControllerTests {
 		
 		mockMvc.perform(post("/delete").param("fileId", testFileId))
 			.andExpect(model().attribute("deletionSussesfull", is(false)))
-			.andExpect(view().name("homepage"));
+			.andExpect(view().name("redirect:/"));
 		
 		Mockito.verify(fileManagerMock).remove(testFileId);
 		Mockito.verifyNoMoreInteractions(fileManagerMock);

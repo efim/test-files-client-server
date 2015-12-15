@@ -1,11 +1,12 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Simple server: search results for $$$Make this dynamic$$$</title>
+    <title th:text="'Simple server: upload results for ' + ${fileName}">Simple server: upload results for file</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<h1>Upload results</h1>
+	<h1 th:text="'Simple server: upload results for ' + ${fileName}">Upload results</h1>	
+	<p th:text="${uploadSuccessfull} ? 'Success' : ('Error: ' + ${errorMessage})">Success</p>
 
 </body>
 </html>

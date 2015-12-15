@@ -24,6 +24,7 @@ public class FileAcquisitionController {
 	@RequestMapping(method = POST)
 	public String upload(@RequestParam("file") MultipartFile file, Model model) {
 		String resultView = "uploadResults";
+		model.addAttribute("fileName", file.getOriginalFilename());
 		if (!file.isEmpty()) {
 			try {
 				byte[] bytes = file.getBytes();

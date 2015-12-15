@@ -46,15 +46,10 @@ public class FileDispatchController {
 		String headerValue = String.format("attachment; filename=\"%s\"", fileName);
 		response.setHeader(headerKey, headerValue);
 
-		try {
-			OutputStream outStream = response.getOutputStream();
-
+		try (OutputStream outStream = response.getOutputStream()){
 			outStream.write(fileToDownload);
 
-			outStream.close();
-			
 			response.flushBuffer();
-
 		} catch (IOException e) {
 			model.addAttribute("downloadSuccess", false);
 			model.addAttribute("error", "Error while writing  " + fileName + " to output => " + e.getMessage());

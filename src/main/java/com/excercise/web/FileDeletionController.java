@@ -28,6 +28,6 @@ public class FileDeletionController {
 		model.addAttribute("deletionSussesfull", result);
 		
 		
-		return "homepage";
+		return "redirect:/";
 	}
 }

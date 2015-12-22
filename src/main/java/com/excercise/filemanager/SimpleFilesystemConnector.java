@@ -8,25 +8,18 @@ import java.nio.file.StandardOpenOption;
 
 import org.springframework.stereotype.Component;
 
-import com.google.common.collect.Interner;
-import com.google.common.collect.Interners;
-
 @Component
 public class SimpleFilesystemConnector implements FilesystemConnector {
-	private Interner<String> interner = Interners.<String> newWeakInterner();
 
 	@Override
 	public void write(String fileId, byte[] data) {
-		String key = interner.intern(fileId);
 
-		synchronized (key) {
-			Path file = FileSystems.getDefault().getPath("", fileId);
+		Path file = FileSystems.getDefault().getPath("", fileId);
 
-			try {
-				Files.write(file, data, StandardOpenOption.CREATE_NEW);
-			} catch (IOException e) {
-				// TODO add logging
-			}
+		try {
+			Files.write(file, data, StandardOpenOption.CREATE_NEW);
+		} catch (IOException e) {
+			// TODO add logging
 		}
 	}
 
@@ -45,15 +38,12 @@ public class SimpleFilesystemConnector implements FilesystemConnector {
 
 	@Override
 	public void delete(String fileId) {
-		String key = interner.intern(fileId);
 
-		synchronized (key) {
-			Path file = FileSystems.getDefault().getPath("", fileId);
-			try {
-				Files.delete(file);
-			} catch (IOException e) {
-				// TODO add logging
-			}
+		Path file = FileSystems.getDefault().getPath("", fileId);
+		try {
+			Files.delete(file);
+		} catch (IOException e) {
+			// TODO add logging
 		}
 	}
 

@@ -3,6 +3,7 @@ package com.excercise.filemanager;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
@@ -40,7 +41,7 @@ class SimpleNameRepository implements NameRepository {
 
 	public SimpleNameRepository(Map<String, String> nameToIdMap,
 			PredicateFactory<String> nameSearchPredicateFactory) {
-		this.nameToIdMap = nameToIdMap;
+		this.nameToIdMap = Collections.synchronizedMap(nameToIdMap);
 		this.nameSearchPredicateFactory = nameSearchPredicateFactory;
 	}
 
